@@ -33,16 +33,18 @@ export const createBlog = async (req, res) => {
 
     const blog = await Blog.create({
 
-      category,
+  category,
 
-      title:
-        category.charAt(0).toUpperCase() +
-        category.slice(1) +
-        " Blog",
+  title:
+    category.charAt(0).toUpperCase() +
+    category.slice(1) +
+    " Blog",
 
-       content: generatedBlog.content,
+  content: generatedBlog.content
+    .replace(/\*\*/g, "")
+    .trim(),
 
-    });
+});
 
     res.status(201).json({
       success: true,
