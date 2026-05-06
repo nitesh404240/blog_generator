@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+const API =
+  "https://blog-generator-bs34.onrender.com";
+
 function App() {
 
   const [category, setCategory] = useState("");
@@ -14,7 +17,7 @@ function App() {
     try {
 
       const response = await axios.get(
-        "http://localhost:8000/blog/get"
+        `${API}/blog/get`
       );
 
       setBlogs(response.data.blogs);
@@ -37,7 +40,7 @@ function App() {
       setLoading(true);
 
       const response = await axios.post(
-        "http://localhost:8000/blog/create",
+        `${API}/blog/create`,
         {
           category,
         }
@@ -69,6 +72,7 @@ function App() {
     fetchBlogs();
 
   }, []);
+
 
   return (
 
