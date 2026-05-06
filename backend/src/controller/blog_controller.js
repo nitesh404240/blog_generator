@@ -40,7 +40,7 @@ export const createBlog = async (req, res) => {
         category.slice(1) +
         " Blog",
 
-      content: generatedBlog,
+       content: generatedBlog.content,
 
     });
 
