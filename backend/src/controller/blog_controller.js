@@ -16,47 +16,23 @@ export const createBlog = async (req, res) => {
 
     }
 
-const prompt = `
-Generate a professional blog on "${category}".
+    const prompt =
+      `Write a professional blog on ${category}`;
 
-Return response in JSON format:
-{
-  "title": "blog title",
-  "content": "full blog content"
-}
-`;
+    const generatedBlog =
+      await getGroqResponse(prompt);
 
-    const generatedBlog = await getGroqResponse(prompt);
-
-    if (!generatedBlog) {
-
-      return res.status(500).json({
-        success: false,
-        message: "AI failed to generate blog",
-      });
-
-    }
-
-  
-   const titleMatch = generatedBlog.match(/Title\s*:\s*(.*)/i);
-
-   const contentMatch = generatedBlog.match(/Content\s*:\s*([\s\S]*)/i);
-
-    const title = titleMatch
-      ? titleMatch[1].trim()
-      : "Untitled Blog";
-
-    const content = contentMatch
-      ? contentMatch[1]
-          .replace(/\*\*/g, "")
-          .trim()
-      : generatedBlog;
-
-    // save in DB
     const blog = await Blog.create({
+
       category,
-      title,
-      content,
+
+      title:
+        category.charAt(0).toUpperCase() +
+        category.slice(1) +
+        " Blog",
+
+      content: generatedBlog,
+
     });
 
     res.status(201).json({
