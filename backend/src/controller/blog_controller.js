@@ -22,6 +22,15 @@ export const createBlog = async (req, res) => {
     const generatedBlog =
       await getGroqResponse(prompt);
 
+    if (!generatedBlog) {
+
+      return res.status(500).json({
+        success: false,
+        message: "AI failed to generate blog",
+      });
+
+    }
+
     const blog = await Blog.create({
 
       category,
@@ -52,7 +61,6 @@ export const createBlog = async (req, res) => {
   }
 
 };
-
 export const getBlogs = async (req, res) => {
 
   try {
