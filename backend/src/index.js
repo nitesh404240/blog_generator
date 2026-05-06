@@ -1,24 +1,23 @@
 import { app } from "./app.js";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 import connectdb from "./database_connect/index.js";
 
 dotenv.config({ path: "./.env" });
 
+const PORT = process.env.PORT || 8000;
 
-const database = connectdb()
-database.then(()=>{
- 
-       
-        app.listen(process.env.PORT||8000,()=>{
-            console.log(`server is listning on ${process.env.PORT}`)
-        })
-         app.on("error",(error)=>{
-        console.log(`getting error`,error);
-        throw error
-    })
-   
-}
-).catch((error)=>{
-          console.log("Mongodb connection failed",error)
-    process.exit(1)
-    })
+connectdb()
+  .then(() => {
+
+    app.listen(PORT, () => {
+      console.log(`Server is listening on ${PORT}`);
+    });
+
+  })
+  .catch((error) => {
+
+    console.log("MongoDB connection failed", error);
+
+    process.exit(1);
+
+  });
