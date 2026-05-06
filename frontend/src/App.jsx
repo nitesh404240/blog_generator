@@ -17,7 +17,7 @@ function App() {
     try {
 
       const response = await axios.get(
-        `${API}/blog/get`
+        `${API}/blog/get-blogs`
       );
 
       setBlogs(response.data.blogs);
